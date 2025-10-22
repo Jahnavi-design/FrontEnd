@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Literacy Hub</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: #f2f5ff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #333;
+    }
+    button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #3578c7;
+    }
+    img {
+      width: 80%;
+      border-radius: 12px;
+      margin: 10px 0;
+    }
+    .hidden {
+      display: none;
+    }
+    .explanation {
+      margin-top: 15px;
+      font-weight: 500;
+    }
+    ul {
+      text-align: left;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Landing Page -->
+  <div class="container" id="landing-page">
+    <h1>Welcome to the AI Literacy Hub 🤖</h1>
+    <p>Let's learn about Artificial Intelligence in a fun and simple way!</p>
+    <button onclick="showLearning()">Start Learning</button>
+  </div>
+
+  <!-- Learning Page -->
+  <div class="container hidden" id="learning-page">
+    <h1>What is Artificial Intelligence?</h1>
+    <img src="C:\Users\Jaanu\Downloads\ai.jpg"="AI Image">
+    <p>Artificial Intelligence (AI) is the science of making machines think and act like humans.  
+       It allows computers to understand, learn, and make decisions automatically.</p>
+
+    <h2>AI in Daily Life</h2>
+    <ul>
+      <li>Voice assistants like Alexa and Google Assistant</li>
+      <li>Face recognition on smartphones</li>
+      <li>Recommendation systems in Netflix and YouTube</li>
+      <li>Self-driving cars</li>
+      <li>AI-powered chatbots in customer support</li>
+    </ul>
+
+    <h2>AI Applications</h2>
+    <ul>
+      <li><b>Healthcare:</b> AI helps in diagnosing diseases and recommending treatments.</li>
+      <li><b>Education:</b> AI can create personalized learning experiences.</li>
+      <li><b>Finance:</b> AI detects fraud and predicts stock market trends.</li>
+      <li><b>Robotics:</b> AI powers robots to perform complex tasks safely.</li>
+      <li><b>Smart Homes:</b> AI controls devices like lights, AC, and security systems.</li>
+    </ul>
+
+    <h2>Misuse of AI</h2>
+    <p>While AI can be very helpful, it can also be misused. Here are some examples:</p>
+    <ul>
+      <li><b>Deepfakes:</b> AI can create fake videos or images of people saying or doing things they never did.</li>
+      <li><b>Privacy Issues:</b> AI can track personal data without permission, like your location or habits.</li>
+      <li><b>Bias in Decisions:</b> AI may make unfair decisions if trained on biased data (e.g., in hiring or loans).</li>
+      <li><b>Automation of Jobs:</b> Some jobs may be replaced by AI, causing unemployment in certain areas.</li>
+      <li><b>Cybersecurity Threats:</b> AI can be used to create smarter malware or hacking tools.</li>
+    </ul>
+    <p><i>Remember:</i> AI is a tool — it’s up to humans to use it responsibly.</p>
+
+    <button onclick="startQuiz()">Let's Go to Quiz</button>
+  </div>
+
+  <!-- Quiz Page -->
+  <div class="container hidden" id="quiz-page">
+    <h2 id="question-text"></h2>
+    <div id="options"></div>
+    <p id="feedback" class="explanation"></p>
+    <button id="next-btn" class="hidden" onclick="nextQuestion()">Next</button>
+  </div>
+
+  <script>
+    const landingPage = document.getElementById('landing-page');
+    const learningPage = document.getElementById('learning-page');
+    const quizPage = document.getElementById('quiz-page');
+    const questionText = document.getElementById('question-text');
+    const optionsDiv = document.getElementById('options');
+    const feedback = document.getElementById('feedback');
+    const nextBtn = document.getElementById('next-btn');
+
+    function showLearning() {
+      landingPage.classList.add('hidden');
+      learningPage.classList.remove('hidden');
+    }
+
+    const quizData = [
+      {
+        question: "What does AI stand for?",
+        options: ["Artificial Intelligence", "Automatic Internet", "Advanced Input"],
+        correct: 0,
+        explanation: "AI stands for Artificial Intelligence, machines simulating human intelligence."
+      },
+      {
+        question: "Which of the following is an example of AI?",
+        options: ["Calculator", "Google Assistant", "Alarm Clock"],
+        correct: 1,
+        explanation: "Google Assistant uses AI to understand and respond to voice commands."
+      },
+      {
+        question: "Which language is most used for AI development?",
+        options: ["Python", "HTML", "CSS"],
+        correct: 0,
+        explanation: "Python is popular for AI because of its simplicity and many libraries."
+      },
+      {
+        question: "Which of these fields uses AI extensively?",
+        options: ["Healthcare", "Gardening", "Carpentry"],
+        correct: 0,
+        explanation: "AI is widely used in healthcare for diagnostics, imaging, and patient care."
+      },
+      {
+        question: "Which of the following is a type of AI?",
+        options: ["Machine Learning", "HTML5", "CSS3"],
+        correct: 0,
+        explanation: "Machine Learning is a branch of AI that allows systems to learn from data."
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    function startQuiz() {
+      learningPage.classList.add('hidden');
+      quizPage.classList.remove('hidden');
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = quizData[currentQuestion];
+      questionText.textContent = q.question;
+      optionsDiv.innerHTML = "";
+      feedback.textContent = "";
+      nextBtn.classList.add('hidden');
+
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.style.display = "block";
+        btn.style.margin = "10px auto";
+        btn.onclick = () => checkAnswer(index);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedIndex) {
+      const q = quizData[currentQuestion];
+      if (selectedIndex === q.correct) {
+        feedback.innerHTML = "✅ Excellent! " + q.explanation;
+        feedback.style.color = "green";
+      } else {
+        feedback.innerHTML = "❌ Sorry! " + q.explanation;
+        feedback.style.color = "red";
+      }
+      nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        showQuestion();
+      } else {
+        questionText.textContent = "🎉 You have completed the quiz!";
+        optionsDiv.innerHTML = "";
+        feedback.textContent = "Great job! You’ve learned the basics of Artificial Intelligence.";
+        nextBtn.classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
